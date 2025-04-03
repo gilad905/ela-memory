@@ -3,28 +3,22 @@ createBoard(4, 4);
 
 function createBoard(rows, cols) {
   const cardCount = rows * cols;
-  const ordering = getRandomPermutation(cardCount);
-  const board = document.getElementById("board");
+  const cardNums = getRandomCardNums(cardCount);
+  const cardTemplate =
+    document.querySelector("#card-template").content.children[0];
+  const board = document.querySelector("#board");
+
   board.style.setProperty("--rows", rows);
   board.style.setProperty("--cols", cols);
 
   let cardI = 0;
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
-      const cardNum = ordering[cardI] + 1;
-      const card = document.createElement("div");
-      const imageUrl = `./assets/cards/${cardNum}.jpeg`;
-      // const cardWidth = parseInt(
-      //   (board.clientWidth - padding * (cols + 1)) / cols
-      // );
-      // const cardHeight = parseInt(
-      //   (board.clientHeight - padding * (rows + 1)) / rows
-      // );
-      // card.style.width = `${cardWidth}px`;
-      // card.style.height = `${cardHeight}px`;
-      // card.style.margin = `${padding}px`;
+      const cardNum = cardNums[cardI] + 1;
+      const card = cardTemplate.cloneNode(true);
 
-      card.style.backgroundImage = `url(${imageUrl})`;
+      const imageUrl = `./assets/cards/${cardNum}.jpeg`;
+      card.children[1].style.backgroundImage = `url(${imageUrl})`;
       card.addEventListener("click", onCardClick);
       board.appendChild(card);
       cardI++;
@@ -32,7 +26,15 @@ function createBoard(rows, cols) {
   }
 }
 
-function getRandomPermutation(count) {
+function getRandomCardNums(cardCount) {
+  const boardImageCount = cardCount / 2;
+  const imageNums = getRandomOrder(imageCount).splice(0, boardImageCount);
+  let cardNums = getRandomOrder(cardCount);
+  cardNums = cardNums.map((_) => imageNums[Math.floor(_ / 2)]);
+  return cardNums;
+}
+
+function getRandomOrder(count) {
   const order = Array.from({ length: count }, (_, i) => i);
   for (let i = order.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -42,6 +44,3 @@ function getRandomPermutation(count) {
 }
 
 function onCardClick(event) {}
-
-const board = document.getElementById("board");
-console.log(getComputedStyle(board).getPropertyValue("--total-col-padding"));

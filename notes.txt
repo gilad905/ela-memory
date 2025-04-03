@@ -1,0 +1,17 @@
+select random images
+get random ordering
+
+her face as cartoon - favicon
+loading - gift, her face as cartoon, happy bday shlomo
+fade out
+fly the cards in
+flip transition
+player points:
+  two "decks" with points on them in the corners
+  each player has their color
+gifts background, or gifts as back of cards
+win:
+  hide board
+  enlarge player points
+  "the winner - shlomo!" in the color of the winner
+sound effects
