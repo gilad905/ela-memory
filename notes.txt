@@ -1,6 +1,5 @@
-select random images
-get random ordering
-
+smaller images
+static card ratio
 her face as cartoon - favicon
 loading - gift, her face as cartoon, happy bday shlomo
 fade out

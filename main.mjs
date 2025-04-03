@@ -4,9 +4,9 @@ createBoard(4, 4);
 function createBoard(rows, cols) {
   const cardCount = rows * cols;
   const cardNums = getRandomCardNums(cardCount);
+  const board = document.querySelector("#board");
   const cardTemplate =
     document.querySelector("#card-template").content.children[0];
-  const board = document.querySelector("#board");
 
   board.style.setProperty("--rows", rows);
   board.style.setProperty("--cols", cols);
@@ -17,6 +17,7 @@ function createBoard(rows, cols) {
       const cardNum = cardNums[cardI] + 1;
       const card = cardTemplate.cloneNode(true);
 
+      card.dataset.cardNum = cardNum;
       const imageUrl = `./assets/cards/${cardNum}.jpeg`;
       card.children[1].style.backgroundImage = `url(${imageUrl})`;
       card.addEventListener("click", onCardClick);
@@ -43,4 +44,11 @@ function getRandomOrder(count) {
   return order;
 }
 
-function onCardClick(event) {}
+function onCardClick(event) {
+  const card = event.currentTarget;
+  card.classList.toggle("flipped");
+  // const flippedCards = document.querySelectorAll(".flipped:not(.matched)");
+  // if (flippedCards.length === 2) {
+  //   checkMatch(flippedCards);
+  // }
+}
