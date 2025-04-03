@@ -1,4 +1,7 @@
 const imageCount = 16;
+const score = [0, 0];
+let currentPlayer = 0;
+
 createBoard(4, 4);
 
 function createBoard(rows, cols) {
@@ -25,6 +28,8 @@ function createBoard(rows, cols) {
       cardI++;
     }
   }
+
+  updateHud();
 }
 
 function getRandomCardNums(cardCount) {
@@ -44,11 +49,43 @@ function getRandomOrder(count) {
   return order;
 }
 
-function onCardClick(event) {
+async function onCardClick(event) {
   const card = event.currentTarget;
-  card.classList.toggle("flipped");
-  // const flippedCards = document.querySelectorAll(".flipped:not(.matched)");
-  // if (flippedCards.length === 2) {
-  //   checkMatch(flippedCards);
-  // }
+  if (/flipped|matched/.test(card.className)) {
+    return;
+  }
+  const flipped = document.querySelectorAll(".flipped");
+  if (flipped.length >= 2) {
+    return;
+  }
+
+  card.classList.add("flipped");
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  if (flipped.length == 1) {
+    const match = flipped[0].dataset.cardNum == card.dataset.cardNum;
+    if (match) {
+      flipped[0].classList.add("matched");
+      card.classList.add("matched");
+      score[currentPlayer]++;
+    } else {
+      currentPlayer = currentPlayer == 0 ? 1 : 0;
+    }
+    flipped[0].classList.remove("flipped");
+    card.classList.remove("flipped");
+    updateHud();
+  }
+}
+
+function updateHud() {
+  for (let i = 0; i < score.length; i++) {
+    const elem = document.querySelectorAll("#hud .card-back")[i];
+    elem.innerText = score[i];
+  }
+  prompt(`Player ${currentPlayer + 1}'s turn`);
+}
+
+function prompt(message) {
+  const promptElem = document.querySelector("#prompt");
+  promptElem.innerText = message;
 }

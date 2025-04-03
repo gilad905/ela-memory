@@ -1,10 +1,13 @@
 body {
   margin: 0;
+  background-color: #b58961;
+
   --card-padding: 1vw;
   --hud-height: 6vh;
   --board-height: calc(100vh - var(--hud-height));
   --board-width: 100vw;
-  background-color: #b58961;
+  --player-1-color: purple;
+  --player-2-color: blue;
 }
 
 #hud {
@@ -18,8 +21,20 @@ body {
 }
 
 #hud .card-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 4vw;
+  font-size: 4vw;
+}
+
+#hud div:first-child {
+  color: var(--player-1-color);
+}
+
+#hud div:last-child {
+  color: var(--player-2-color);
 }
 
 #board {
@@ -39,10 +54,13 @@ body {
   width: calc((var(--board-width) - var(--total-col-padding)) / var(--cols));
   height: calc((var(--board-height) - var(--total-row-padding)) / var(--rows));
   margin: var(--card-padding);
-  cursor: pointer;
   transition: transform 500ms ease;
   /* perspective: 100px; */
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
+}
+
+.card:not(.flipped):not(.matched) {
+  cursor: pointer;
 }
 
 .card-side {
@@ -51,10 +69,12 @@ body {
   background-repeat: no-repeat;
   outline: 0.3vw solid #0d402e;
   border-radius: 1vw;
+  transition: opacity 500ms ease;
 }
 
 .card-back {
   background-image: url("./assets/card-back.jpg");
+  filter: contrast(0.7);
 }
 
 .card .card-side {
@@ -78,4 +98,8 @@ body {
 .card.flipped,
 .card .card-side:last-child {
   transform: rotateY(-180deg);
+}
+
+.card.matched .card-side {
+  opacity: 0;
 }
