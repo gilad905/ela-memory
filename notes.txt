@@ -3,10 +3,10 @@ loading:
   gift, her face as cartoon, happy bday shlomo
   size selection
   fly the cards in
-gifts background / gifts as back of cards
+match - fly cards to score
 win:
   hide board
   enlarge player points
   "the winner - shlomo!" in the color of the winner
 sound effects
-smaller images
+smaller image files of card fronts

@@ -90,8 +90,16 @@ function updateHud() {
     scoreElem.classList[classFunc]("current");
     scoreElem.querySelector("span").innerText = score[i];
   }
-  prompt(`Player ${currentPlayer + 1}'s turn`);
+  // prompt(`Player ${currentPlayer + 1}'s turn`);
 }
+
+// function flyCardIn(card) {
+//   const cardRect = card.getBoundingClientRect();
+//   const boardRect = document.querySelector("#board").getBoundingClientRect();
+//   const x = cardRect.x - boardRect.x;
+//   const y = cardRect.y - boardRect.y;
+//   card.style.transform = `translate(${x}px, ${y}px)`;
+// }
 
 function prompt(message) {
   const promptElem = document.querySelector("#prompt");
