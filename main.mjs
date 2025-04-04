@@ -1,4 +1,4 @@
-const imageCount = 16;
+const imageCount = 21;
 const score = [0, 0];
 let currentPlayer = 0;
 
