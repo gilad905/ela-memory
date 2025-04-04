@@ -88,7 +88,7 @@ function updateHud() {
     const scoreElem = document.querySelectorAll("#hud .score")[i];
     const classFunc = i == currentPlayer ? "add" : "remove";
     scoreElem.classList[classFunc]("current");
-    scoreElem.querySelector(".card-back span").innerText = score[i];
+    scoreElem.querySelector("span").innerText = score[i];
   }
   prompt(`Player ${currentPlayer + 1}'s turn`);
 }

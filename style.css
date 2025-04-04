@@ -8,13 +8,21 @@
 
 body {
   margin: 0;
-  background-color: #b58961;
-  font-size: 3vw;
+  background-color: antiquewhite;
+  background-image: url(./@raw-assets/gift/gift-5.png);
+  background-size: 16vh;
+  /* backdrop-filter: blur(.1vh); */
+  font-size: 3vh;
   font-family: Noot, Arial, Helvetica, sans-serif;
   overflow: hidden;
 
-  --card-padding: 1vw;
-  --hud-height: 6vh;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  --card-padding: 1vh;
+  --hud-height: 7vh;
   --board-height: calc(100vh - var(--hud-height));
   --main-width: 80vh;
   --player-1-color: purple;
@@ -36,26 +44,26 @@ main {
   box-sizing: border-box;
 }
 
-#hud .score {
+.score {
   height: 100%;
-  width: 4vw;
+  width: 4vh;
   position: relative;
 }
 
-#hud .card-side {
+.score .card-side {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* filter: brightness(0.9) grayscale(1) contrast(0.4); */
+  background-image: url(./assets/score.jpg);
   filter: grayscale(1) contrast(0.4);
   transition: filter 0.5s ease;
 }
 
 #hud .card-side span {
-  font-size: 3.2vw;
-  margin-top: 1vw;
+  font-size: 3.2vh;
+  margin-top: 0.8vh;
 }
 
 #hud .score:first-child .card-side {
@@ -67,7 +75,6 @@ main {
 }
 
 #hud .score.current .card-side {
-  /* animation: pulse 0.5s ease-in-out infinite alternate; */
   filter: grayscale(0) contrast(1);
 }
 
@@ -91,7 +98,7 @@ main {
   width: 100%;
   height: 100%;
   animation: rotate 10s linear infinite;
-  background: url(./assets/starburst.png) no-repeat center / cover;
+  background: url(./assets/starburst.png) no-repeat center / contain;
 }
 
 @keyframes pulse {
@@ -144,8 +151,8 @@ main {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  outline: 0.3vw solid #0d402e;
-  border-radius: 1vw;
+  outline: 0.3vh solid #0d402e;
+  border-radius: 1vh;
   transition: opacity 0.5s ease;
 }
 
