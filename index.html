@@ -10,13 +10,21 @@
 </head>
 
 <body>
-  <div id="hud">
-    <div class="card-side card-back"></div>
-    <div id="prompt"></div>
-    <div class="card-side card-back"></div>
-  </div>
-  <main id="board">
+  <main>
+    <div id="hud">
+      <div id="prompt"></div>
+    </div>
+    <div id="board"></div>
   </main>
+
+  <template id="score-template">
+    <div class="score">
+      <div class="starburst"></div>
+      <div class="card-side card-back">
+        <span></span>
+      </div>
+    </div>
+  </template>
 
   <template id="card-template">
     <div class="card">

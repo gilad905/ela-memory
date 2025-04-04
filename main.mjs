@@ -2,14 +2,22 @@ const imageCount = 16;
 const score = [0, 0];
 let currentPlayer = 0;
 
+createHud();
 createBoard(4, 4);
+
+function createHud() {
+  const hud = document.querySelector("#hud");
+  const score1 = cloneTemplate("score");
+  hud.prepend(score1);
+  const score2 = cloneTemplate("score");
+  hud.append(score2);
+  updateHud();
+}
 
 function createBoard(rows, cols) {
   const cardCount = rows * cols;
   const cardNums = getRandomCardNums(cardCount);
   const board = document.querySelector("#board");
-  const cardTemplate =
-    document.querySelector("#card-template").content.children[0];
 
   board.style.setProperty("--rows", rows);
   board.style.setProperty("--cols", cols);
@@ -18,7 +26,7 @@ function createBoard(rows, cols) {
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const cardNum = cardNums[cardI] + 1;
-      const card = cardTemplate.cloneNode(true);
+      const card = cloneTemplate("card");
 
       card.dataset.cardNum = cardNum;
       const imageUrl = `./assets/cards/${cardNum}.jpeg`;
@@ -28,8 +36,6 @@ function createBoard(rows, cols) {
       cardI++;
     }
   }
-
-  updateHud();
 }
 
 function getRandomCardNums(cardCount) {
@@ -79,8 +85,10 @@ async function onCardClick(event) {
 
 function updateHud() {
   for (let i = 0; i < score.length; i++) {
-    const elem = document.querySelectorAll("#hud .card-back")[i];
-    elem.innerText = score[i];
+    const scoreElem = document.querySelectorAll("#hud .score")[i];
+    const classFunc = i == currentPlayer ? "add" : "remove";
+    scoreElem.classList[classFunc]("current");
+    scoreElem.querySelector(".card-back span").innerText = score[i];
   }
   prompt(`Player ${currentPlayer + 1}'s turn`);
 }
@@ -88,4 +96,10 @@ function updateHud() {
 function prompt(message) {
   const promptElem = document.querySelector("#prompt");
   promptElem.innerText = message;
+}
+
+function cloneTemplate(id) {
+  const template = document.querySelector(`#${id}-template`);
+  const clone = document.importNode(template.content.children[0], true);
+  return clone;
 }

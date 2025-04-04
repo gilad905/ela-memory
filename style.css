@@ -1,13 +1,29 @@
+@font-face {
+  font-family: Noot;
+  src: url("./assets/Noot.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   margin: 0;
   background-color: #b58961;
+  font-size: 3vw;
+  font-family: Noot, Arial, Helvetica, sans-serif;
+  overflow: hidden;
 
   --card-padding: 1vw;
   --hud-height: 6vh;
   --board-height: calc(100vh - var(--hud-height));
-  --board-width: 100vw;
+  --main-width: 80vh;
   --player-1-color: purple;
   --player-2-color: blue;
+}
+
+main {
+  margin: auto;
+  width: var(--main-width)
 }
 
 #hud {
@@ -20,26 +36,87 @@ body {
   box-sizing: border-box;
 }
 
+#hud .score {
+  height: 100%;
+  width: 4vw;
+  position: relative;
+}
+
 #hud .card-side {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  width: 4vw;
-  font-size: 4vw;
+  /* filter: brightness(0.9) grayscale(1) contrast(0.4); */
+  filter: grayscale(1) contrast(0.4);
+  transition: filter 0.5s ease;
 }
 
-#hud div:first-child {
+#hud .card-side span {
+  font-size: 3.2vw;
+  margin-top: 1vw;
+}
+
+#hud .score:first-child .card-side {
   color: var(--player-1-color);
 }
 
-#hud div:last-child {
+#hud .score:last-child .card-side {
   color: var(--player-2-color);
+}
+
+#hud .score.current .card-side {
+  /* animation: pulse 0.5s ease-in-out infinite alternate; */
+  filter: grayscale(0) contrast(1);
+}
+
+#hud .score .starburst {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.5s ease;
+}
+
+#hud .score.current .starburst {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#hud .score .starburst::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: rotate 10s linear infinite;
+  background: url(./assets/starburst.png) no-repeat center / cover;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 #board {
   height: var(--board-height);
-  width: var(--board-width);
+  width: 100%;
   /* padding: var(--card-padding); */
   box-sizing: border-box;
   --total-col-padding: calc(var(--card-padding) * (var(--cols)) * 2);
@@ -51,10 +128,10 @@ body {
 .card {
   display: inline-block;
   position: relative;
-  width: calc((var(--board-width) - var(--total-col-padding)) / var(--cols));
+  width: calc((var(--main-width) - var(--total-col-padding)) / var(--cols));
   height: calc((var(--board-height) - var(--total-row-padding)) / var(--rows));
   margin: var(--card-padding);
-  transition: transform 500ms ease;
+  transition: transform 0.5s ease;
   /* perspective: 100px; */
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
 }
@@ -69,7 +146,7 @@ body {
   background-repeat: no-repeat;
   outline: 0.3vw solid #0d402e;
   border-radius: 1vw;
-  transition: opacity 500ms ease;
+  transition: opacity 0.5s ease;
 }
 
 .card-back {
