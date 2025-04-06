@@ -23,9 +23,9 @@ body {
   align-items: center;
   justify-content: center;
 
-  background-color: antiquewhite;
-  /* background-image: url(./@raw-assets/gift/gift-5.png); */
-  background-size: 16rem;
+  /* background-color: antiquewhite; */
+  background-image: url(./@raw-assets/watercolor-texture-background-free-vector.jpg);
+  /* background-size: 16rem; */
   /* backdrop-filter: blur(.1rem); */
   font-size: 3rem;
   font-family: Noot, Arial, Helvetica, sans-serif;
