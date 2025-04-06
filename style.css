@@ -9,7 +9,7 @@
 :root {
   font-size: min(1vh, 1vw);
 
-  --main-width: 80rem;
+  --main-width: 70rem;
   --hud-height: 7rem;
   --board-height: calc(100rem - var(--hud-height));
   --card-padding: 1rem;
@@ -148,7 +148,7 @@ main {
   height: calc((var(--board-height) - var(--total-row-padding)) / var(--rows));
   margin: var(--card-padding);
   transition: transform 0.5s ease;
-  transform: translate(-100vh, -100vh);
+  /* transform: translate(-100vh, -100vh); */
 }
 
 .card:not(.flipped):not(.matched) {
@@ -165,8 +165,8 @@ main {
 }
 
 .card-back {
-  background-image: url("./assets/card-back.jpg");
-  filter: contrast(0.7);
+  background-image: url("./@raw-assets/card/unicorn/unicorn-5.png");
+  /* filter: contrast(0.7); */
 }
 
 .card .card-side {
