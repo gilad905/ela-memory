@@ -171,7 +171,8 @@ function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-window.isDev = true;
+window.isDev = false;
+// window.isDev = true;
 window.handleWinMock = function () {
   score[0] = randInt(0, 10);
   score[1] = randInt(0, 10);

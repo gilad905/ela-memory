@@ -1,3 +1,5 @@
+progress bar
+fix wide screen bg
 favicon - her face as cartoon / a card
 ? anna + elsa in hud
 loading:

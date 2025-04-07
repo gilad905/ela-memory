@@ -16,8 +16,10 @@
   --board-height: calc(var(--main-height) - var(--hud-height));
   --card-padding: 1rem;
 
-  --player-1-color: #79c6f6;
-  --player-2-color: #79c6f6;
+  
+  /* --player-1-color: #79c6f6; */
+  --player-1-color: #f5999e;
+  --player-2-color: #c2c2c2;
 }
 
 @media (min-aspect-ratio: 3 / 4) {
@@ -33,6 +35,7 @@ body {
   justify-content: center;
 
   background-image: url(./@raw-assets/watercolor-texture-background-free-vector.jpg);
+  background-size: cover;
   font-family: Noot, Arial, Helvetica, sans-serif;
   overflow: hidden;
   height: 100vh;
