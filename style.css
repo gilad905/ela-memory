@@ -7,14 +7,22 @@
 }
 
 :root {
-  font-size: min(1vh, 1vw);
+  font-size: vw;
 
-  --main-width: 70rem;
-  --hud-height: 7rem;
-  --board-height: calc(100rem - var(--hud-height));
+  --main-width: 100rem;
+  --main-height: calc(var(--main-width) * 4 / 3);
+
+  --hud-height: calc(var(--main-height) / 100 * 7);
+  --board-height: calc(var(--main-height) - var(--hud-height));
   --card-padding: 1rem;
   --player-1-color: purple;
   --player-2-color: blue;
+}
+
+@media (min-aspect-ratio: 3 / 4) {
+  :root {
+    font-size: calc(1vh * 3 / 4);
+  }
 }
 
 body {
@@ -23,8 +31,8 @@ body {
   align-items: center;
   justify-content: center;
 
-  /* background-color: antiquewhite; */
   background-image: url(./@raw-assets/watercolor-texture-background-free-vector.jpg);
+  /* background-color: antiquewhite; */
   /* background-size: 16rem; */
   /* backdrop-filter: blur(.1rem); */
   font-size: 3rem;
@@ -41,7 +49,9 @@ body {
 }
 
 main {
-  width: var(--main-width)
+  /* background-color: blue; */
+  width: var(--main-width);
+  height: var(--main-height);
 }
 
 #hud {
@@ -150,7 +160,6 @@ main {
   height: calc((var(--board-height) - var(--total-row-padding)) / var(--rows));
   margin: var(--card-padding);
   transition: transform 0.5s ease;
-  /* transform: translate(-100vh, -100vh); */
 }
 
 .card:not(.flipped):not(.matched) {
@@ -185,6 +194,7 @@ main {
   transform-style: preserve-3d;
 }
 
+.card,
 .card .card-side:first-child {
   transform: rotateY(0deg);
 }
