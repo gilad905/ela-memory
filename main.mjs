@@ -1,9 +1,13 @@
 const imageCount = 21;
 const score = [0, 0];
+const rows = 4;
+const cols = 4;
+const cardCount = rows * cols;
+
 let currentPlayer = 0;
 
 createHud();
-createBoard(4, 4);
+createBoard();
 
 function createHud() {
   const hud = document.querySelector("#hud");
@@ -14,28 +18,32 @@ function createHud() {
   updateHud();
 }
 
-function createBoard(rows, cols) {
-  const cardCount = rows * cols;
+async function createBoard() {
   const cardNums = getRandomCardNums(cardCount);
   const board = document.querySelector("#board");
 
   board.style.setProperty("--rows", rows);
   board.style.setProperty("--cols", cols);
 
-  let cardI = 0;
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      const cardNum = cardNums[cardI] + 1;
-      const card = cloneTemplate("card");
+  for (let i = 0; i < cardCount; i++) {
+    const cardNum = cardNums[i] + 1;
+    const card = cloneTemplate("card");
 
-      card.dataset.cardNum = cardNum;
-      const imageUrl = `./assets/cards/${cardNum}.jpeg`;
-      card.children[1].style.backgroundImage = `url(${imageUrl})`;
-      card.addEventListener("click", onCardClick);
-      board.appendChild(card);
-      cardI++;
-    }
+    card.dataset.cardNum = cardNum;
+    const imageUrl = `./assets/cards/${cardNum}.jpeg`;
+    card.children[1].style.backgroundImage = `url(${imageUrl})`;
+    card.addEventListener("click", onCardClick);
+    board.appendChild(card);
   }
+
+  for (const card of board.children) {
+    await waitFor(60);
+    card.classList.remove("out-of-bounds");
+  }
+}
+
+function waitFor(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function getRandomCardNums(cardCount) {
@@ -92,14 +100,6 @@ function updateHud() {
   }
   // prompt(`Player ${currentPlayer + 1}'s turn`);
 }
-
-// function flyCardIn(card) {
-//   const cardRect = card.getBoundingClientRect();
-//   const boardRect = document.querySelector("#board").getBoundingClientRect();
-//   const x = cardRect.x - boardRect.x;
-//   const y = cardRect.y - boardRect.y;
-//   card.style.transform = `translate(${x}px, ${y}px)`;
-// }
 
 function prompt(message) {
   const promptElem = document.querySelector("#prompt");
