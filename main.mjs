@@ -3,6 +3,7 @@ const score = [0, 0];
 const rows = 4;
 const cols = 4;
 const cardCount = rows * cols;
+const scorePositions = [];
 
 let currentPlayer = 0;
 
@@ -11,10 +12,15 @@ createBoard();
 
 function createHud() {
   const hud = document.querySelector("#hud");
-  const score1 = cloneTemplate("score");
-  hud.prepend(score1);
-  const score2 = cloneTemplate("score");
-  hud.append(score2);
+  for (let i = 0; i < 2; i++) {
+    const score = cloneTemplate("score");
+    const funcName = i == 0 ? "prepend" : "append";
+    hud[funcName](score);
+    const rect = score.getBoundingClientRect();
+    const x = rect.x + rect.width / 2;
+    const y = rect.y + rect.height / 2;
+    scorePositions.push({ x, y });
+  }
   updateHud();
 }
 
@@ -78,17 +84,31 @@ async function onCardClick(event) {
 
   if (flipped.length == 1) {
     const match = flipped[0].dataset.cardNum == card.dataset.cardNum;
-    if (match) {
-      flipped[0].classList.add("matched");
-      card.classList.add("matched");
-      score[currentPlayer]++;
+    if (window.isDev || match) {
+      handleMatch([flipped[0], card]);
     } else {
       currentPlayer = currentPlayer == 0 ? 1 : 0;
+      flipped[0].classList.remove("flipped");
+      card.classList.remove("flipped");
     }
-    flipped[0].classList.remove("flipped");
-    card.classList.remove("flipped");
     updateHud();
   }
+}
+
+function handleMatch(cards) {
+  for (const card of cards) {
+    card.classList.add("matched");
+    const rect = card.getBoundingClientRect();
+    const scorePos = scorePositions[currentPlayer];
+    for (const prop of ["x", "y"]) {
+      const diff = scorePos[prop] - rect[prop];
+      card.style.setProperty(`--${prop}-pos`, `${diff}px`);
+    }
+    card.addEventListener("transitionend", (_) => {
+      card.classList.remove("flipped");
+    });
+  }
+  score[currentPlayer]++;
 }
 
 function updateHud() {
@@ -98,7 +118,7 @@ function updateHud() {
     scoreElem.classList[classFunc]("current");
     scoreElem.querySelector("span").innerText = score[i];
   }
-  // prompt(`Player ${currentPlayer + 1}'s turn`);
+  prompt(`שחקן מספר ${currentPlayer + 1} - תורך`);
 }
 
 function prompt(message) {

@@ -32,9 +32,6 @@ body {
   justify-content: center;
 
   background-image: url(./@raw-assets/watercolor-texture-background-free-vector.jpg);
-  /* background-color: antiquewhite; */
-  /* background-size: 16rem; */
-  /* backdrop-filter: blur(.1rem); */
   font-size: 3rem;
   font-family: Noot, Arial, Helvetica, sans-serif;
   overflow: hidden;
@@ -65,8 +62,8 @@ main {
 }
 
 .score {
-  height: 100%;
-  width: 4rem;
+  height: 5rem;
+  width: 5rem;
   position: relative;
 }
 
@@ -97,29 +94,7 @@ main {
 
 #hud .score.current .card-side {
   filter: grayscale(0) contrast(1);
-}
-
-#hud .score .starburst {
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: transform 0.5s ease;
-}
-
-#hud .score.current .starburst {
-  transform: translate(-50%, -50%) scale(1);
-}
-
-#hud .score .starburst::before {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 100%;
-  animation: rotate 10s linear infinite;
-  background: url(./assets/starburst.png) no-repeat center / contain;
+  animation: pulse .5s infinite alternate ease-in-out;
 }
 
 @keyframes pulse {
@@ -159,16 +134,31 @@ main {
   width: calc((var(--main-width) - var(--total-col-padding)) / var(--cols));
   height: calc((var(--board-height) - var(--total-row-padding)) / var(--rows));
   margin: var(--card-padding);
-  transform: translate(0vh, 0vw);
-  transition: transform 0.5s ease;
+  --x-pos: 0;
+  --y-pos: 0;
+  --scale: 1;
+  transform: translate(var(--x-pos), var(--y-pos)) scale(var(--scale));
+  transform-origin: top left;
+  transition: 0.5s ease-in-out;
+  transition-property: transform;
 }
 
 .card.out-of-bounds {
-  transform: translate(-100vh, -100vw);
+  --x-pos: -100vw;
+  --y-pos: -100vh;
+}
+
+.card.matched {
+  --scale: 0.1;
+  z-index: 1;
 }
 
 .card:not(.flipped):not(.matched) {
   cursor: pointer;
+}
+
+.card.matched:not(.flipped) {
+  opacity: 0;
 }
 
 .card-side {
@@ -209,8 +199,4 @@ main {
 .card .card-front,
 .card.flipped .card-back {
   transform: rotateY(-180deg);
-}
-
-.card.matched .card-side {
-  opacity: 0;
 }
