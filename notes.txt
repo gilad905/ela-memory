@@ -1,12 +1,11 @@
 favicon - her face as cartoon / a card
+? anna + elsa in hud
 loading:
   gift, her face as cartoon, happy bday shlomo
   size selection
-  fly the cards in
-match - fly cards to score
 win:
-  hide board
-  enlarge player points
-  "the winner - shlomo!" in the color of the winner
-sound effects
+  fireworks
+  ? "play again" button
+? sound effects
 smaller image files of card fronts
+smaller bg image

@@ -15,8 +15,9 @@
   --hud-height: calc(var(--main-height) / 100 * 7);
   --board-height: calc(var(--main-height) - var(--hud-height));
   --card-padding: 1rem;
-  --player-1-color: purple;
-  --player-2-color: blue;
+
+  --player-1-color: #79c6f6;
+  --player-2-color: #79c6f6;
 }
 
 @media (min-aspect-ratio: 3 / 4) {
@@ -32,7 +33,6 @@ body {
   justify-content: center;
 
   background-image: url(./@raw-assets/watercolor-texture-background-free-vector.jpg);
-  font-size: 3rem;
   font-family: Noot, Arial, Helvetica, sans-serif;
   overflow: hidden;
   height: 100vh;
@@ -46,7 +46,6 @@ body {
 }
 
 main {
-  /* background-color: blue; */
   width: var(--main-width);
   height: var(--main-height);
 }
@@ -59,12 +58,48 @@ main {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
+  font-size: 3rem;
+}
+
+#hud.large #prompt,
+#hud.large .score {
+  transition: transform 2s ease;
+}
+
+#hud.large #prompt {
+  transform: scale(2.5) translateY(8rem);
+}
+
+#hud.large .score:first-child {
+  transform: scale(2.5) translate(10rem, 20rem);
+}
+
+#hud.large .score:last-child {
+  transform: scale(2.5) translate(-10rem, 20rem);
+}
+
+#prompt {
+  /* text-shadow: .1rem -.1rem 0 black, -.1rem .1rem 0 black, .1rem .1rem 0 black; */
+  -webkit-text-stroke: .15rem black;
+}
+
+#prompt.player-1 {
+  color: var(--player-1-color);
+}
+
+#prompt.player-2 {
+  color: var(--player-2-color);
 }
 
 .score {
   height: 5rem;
   width: 5rem;
   position: relative;
+  transform: translate(0, 0);
+}
+
+.score.lost {
+  filter: grayscale(1) contrast(0.4);
 }
 
 .score .card-side {
@@ -73,9 +108,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-image: url(./assets/score.jpg); */
-  background-color: antiquewhite;
-  filter: grayscale(1) contrast(0.4);
+  background-color: white;
   transition: filter 0.5s ease;
 }
 
@@ -84,37 +117,17 @@ main {
   margin-top: 0.8rem;
 }
 
-#hud .score:first-child .card-side {
+.score:first-child .card-side {
   color: var(--player-1-color);
 }
 
-#hud .score:last-child .card-side {
+.score:last-child .card-side {
   color: var(--player-2-color);
 }
 
-#hud .score.current .card-side {
+.score.current .card-side {
   filter: grayscale(0) contrast(1);
   animation: pulse .5s infinite alternate ease-in-out;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-
-  100% {
-    transform: scale(1.2);
-  }
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 #board {
@@ -126,6 +139,7 @@ main {
   --total-row-padding: calc(var(--card-padding) * (var(--rows)) * 2);
   /* disable spacing because of line breaks */
   font-size: 0;
+  transition: opacity 0.5s;
 }
 
 .card {
@@ -157,7 +171,7 @@ main {
   cursor: pointer;
 }
 
-.card.matched:not(.flipped) {
+.hidden {
   opacity: 0;
 }
 
@@ -174,7 +188,6 @@ main {
 
 .card-back {
   background-image: url("./@raw-assets/card/unicorn/unicorn-5.png");
-  /* filter: contrast(0.7); */
 }
 
 .card .card-side {
@@ -199,4 +212,24 @@ main {
 .card .card-front,
 .card.flipped .card-back {
   transform: rotateY(-180deg);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

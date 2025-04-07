@@ -90,25 +90,35 @@ async function onCardClick(event) {
       currentPlayer = currentPlayer == 0 ? 1 : 0;
       flipped[0].classList.remove("flipped");
       card.classList.remove("flipped");
+      updateHud();
     }
-    updateHud();
   }
 }
 
 function handleMatch(cards) {
   for (const card of cards) {
     card.classList.add("matched");
-    const rect = card.getBoundingClientRect();
-    const scorePos = scorePositions[currentPlayer];
-    for (const prop of ["x", "y"]) {
-      const diff = scorePos[prop] - rect[prop];
-      card.style.setProperty(`--${prop}-pos`, `${diff}px`);
-    }
-    card.addEventListener("transitionend", (_) => {
-      card.classList.remove("flipped");
-    });
+    flyCardToScore(card);
   }
   score[currentPlayer]++;
+  updateHud();
+  const matchedCards = document.querySelectorAll(".matched");
+  if (matchedCards.length == cardCount) {
+    handleWin();
+  }
+}
+
+function flyCardToScore(card) {
+  const rect = card.getBoundingClientRect();
+  const scorePos = scorePositions[currentPlayer];
+  for (const prop of ["x", "y"]) {
+    const diff = scorePos[prop] - rect[prop];
+    card.style.setProperty(`--${prop}-pos`, `${diff}px`);
+  }
+  card.addEventListener("transitionend", (_) => {
+    card.classList.remove("flipped");
+    card.classList.add("hidden");
+  });
 }
 
 function updateHud() {
@@ -118,11 +128,15 @@ function updateHud() {
     scoreElem.classList[classFunc]("current");
     scoreElem.querySelector("span").innerText = score[i];
   }
-  prompt(`שחקן מספר ${currentPlayer + 1} - תורך`);
+  prompt(`${getPlayerDesc(currentPlayer)} - תורך`, currentPlayer);
 }
 
-function prompt(message) {
+function prompt(message, playerNum) {
   const promptElem = document.querySelector("#prompt");
+  promptElem.classList.remove("player-1", "player-2");
+  if (playerNum != -1) {
+    promptElem.classList.add(`player-${playerNum + 1}`);
+  }
   promptElem.innerText = message;
 }
 
@@ -130,4 +144,41 @@ function cloneTemplate(id) {
   const template = document.querySelector(`#${id}-template`);
   const clone = document.importNode(template.content.children[0], true);
   return clone;
+}
+
+function handleWin() {
+  let winner = score[0] > score[1] ? 0 : 1;
+  winner = score[0] == score[1] ? -1 : winner;
+  const winMessage = `!המנצח - ${getPlayerDesc(winner)}`;
+  const message = score[0] == score[1] ? "!תיקו" : winMessage;
+  prompt(message, winner);
+  for (let i = 0; i < 2; i++) {
+    const score = document.querySelectorAll("#hud .score")[i];
+    score.classList.remove("current");
+    if (winner != -1 && i != winner) {
+      score.classList.add("lost");
+    }
+  }
+  document.querySelector("#hud").classList.add("large");
+  document.querySelector("#board").classList.add("hidden");
+}
+
+function getPlayerDesc(playerNum) {
+  return `שלמה מספר ${playerNum + 1}`;
+}
+
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+window.isDev = true;
+window.handleWinMock = function () {
+  score[0] = randInt(0, 10);
+  score[1] = randInt(0, 10);
+  updateHud();
+  handleWin();
+};
+
+if (window.isDev) {
+  setTimeout(window.handleWinMock, 5000);
 }
