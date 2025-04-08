@@ -10,12 +10,15 @@ let currentPlayer = 0;
 init();
 
 async function init() {
+  for (const element of document.querySelectorAll(".hidden")) {
+    element.style.display = "none";
+  }
   createHud();
   createBoard();
   await window.showLoader();
-  document.querySelector("#loader").remove();
+  hide(document.querySelector("#loader"));
   document.querySelector("#intro .button").addEventListener("click", startGame);
-  document.querySelector("#intro").classList.remove("hidden");
+  document.querySelector("#intro").classList.remove("scale-0");
 }
 
 function createHud() {
@@ -24,10 +27,6 @@ function createHud() {
     const score = cloneTemplate("score");
     const funcName = i == 0 ? "prepend" : "append";
     hud[funcName](score);
-    const rect = score.getBoundingClientRect();
-    const x = rect.x + rect.width / 2;
-    const y = rect.y + rect.height / 2;
-    scorePositions.push({ x, y });
   }
   updateHud();
 }
@@ -54,7 +53,13 @@ function createBoard() {
 async function startGame() {
   await hide(document.querySelector("#intro"));
   for (const id of ["board", "hud"]) {
-    document.querySelector(`#${id}`).classList.remove("hidden");
+    show(document.querySelector(`#${id}`));
+  }
+  for (const score of document.querySelectorAll("#hud .score")) {
+    const rect = score.getBoundingClientRect();
+    const x = rect.x + rect.width / 2;
+    const y = rect.y + rect.height / 2;
+    scorePositions.push({ x, y });
   }
   for (const card of document.querySelectorAll("#board .card")) {
     await waitFor(60);
@@ -85,7 +90,7 @@ async function onCardClick(event) {
 
   if (flipped.length == 1) {
     const match = flipped[0].dataset.cardNum == card.dataset.cardNum;
-    if (window.alwaysMatch || match) {
+    if (elaMemory.alwaysMatch || match) {
       handleMatch([flipped[0], card]);
     } else {
       currentPlayer = currentPlayer == 0 ? 1 : 0;
@@ -118,7 +123,7 @@ async function flyCardToScore(card) {
   }
   await waitForEvent(card, "transitionend");
   card.classList.remove("flipped");
-  hide(card);
+  card.classList.add("hidden");
 }
 
 function updateHud() {
@@ -146,10 +151,9 @@ async function handleWin() {
     }
   }
   document.querySelector("#hud").classList.add("large");
-  const board = document.querySelector("#board");
-  await hide(board);
+  await hide(document.querySelector("#board"));
   await waitFor(1500);
-  document.querySelector("#win").classList.remove("hidden");
+  show(document.querySelector("#win"));
 }
 
 function getPlayerDesc(playerNum) {
@@ -165,11 +169,19 @@ function prompt(message, playerNum) {
   promptElem.innerText = message;
 }
 
-async function hide(elem) {
-  elem.classList.add("fading-out");
+async function show(elem) {
+  elem.style.display = "";
+  await waitFor(0);
+  elem.classList.remove("hidden");
   await waitForEvent(elem, "transitionend");
+}
+
+async function hide(elem) {
   elem.classList.add("hidden");
-  elem.classList.remove("fading-out");
+  await waitForEvent(elem, "transitionend");
+  if (elem.classList.contains("hidden")) {
+    elem.style.display = "none";
+  }
 }
 
 function cloneTemplate(id) {
@@ -201,15 +213,13 @@ function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-window.handleWinMock = function () {
+window.elaMemory = {};
+elaMemory.alwaysMatch = false;
+elaMemory.mockWin = function () {
   score[0] = randInt(0, 10);
   score[1] = randInt(0, 10);
   updateHud();
   handleWin();
 };
 
-// window.autoWin = false;
-// window.autoWin = true;
-// if (window.autoWin) {
-//   setTimeout(window.handleWinMock, 5000);
-// }
+// setTimeout(elaMemory.mockWin, 5000);

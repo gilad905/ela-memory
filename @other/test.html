@@ -1,0 +1,55 @@
+<style>
+    div {
+        background-color: red;
+        transition: opacity 0.5s;
+    }
+
+    div.hidden {
+        opacity: 0;
+    }
+</style>
+
+<button>click</button>
+<div class="hidden">div</div>
+
+<script>
+    function show(el) {
+        el.style.display = "";
+        requestAnimationFrame(() => {
+            el.classList.remove("hidden");
+        });
+    }
+    function hide(el) {
+        el.addEventListener("transitionend", e => {
+            if (e.target.classList.contains("hidden")) {
+                e.target.style.display = "none";
+            }
+        }, { once: true });
+        el.classList.add("hidden");
+    }
+    function toggle(el) {
+        if (el.classList.contains("hidden")) {
+            show(el);
+        } else {
+            hide(el);
+        }
+    }
+    // document.querySelector("div").addEventListener("transitionstart", e => {
+    //     if (e.target.classList.contains("hidden")) {
+    //         e.target.style.display = "none";
+    //     } else {
+    //         e.target.style.display = "block";
+    //     }
+    // });
+
+    // document.querySelector("div").addEventListener("transitionend", e => {
+    //     if (e.target.classList.contains("hidden")) {
+    //         e.target.style.display = "none";
+    //     } else {
+    //         e.target.style.display = "block";
+    //     }
+    // });
+    document.querySelector("button").addEventListener("click", _ => {
+        toggle(document.querySelector("div"));
+    });
+</script>

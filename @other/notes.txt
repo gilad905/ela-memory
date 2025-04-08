@@ -1,6 +1,5 @@
 test ios
-test loader
-address bar color on mobile
+test address bar color
 smaller image files
 ? size selection
 ? anna + elsa in hud

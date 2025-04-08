@@ -1,7 +1,19 @@
 async function showLoader() {
   const loader = document.querySelector("#loader div");
   const promises = [];
+
   promises.push(document.fonts.ready);
+
+  for (const image of document.images) {
+    if (!image.complete) {
+      promises.push(
+        new Promise((resolve) => {
+          image.addEventListener("load", resolve);
+          image.addEventListener("error", resolve);
+        })
+      );
+    }
+  }
 
   for (const url of getBackgroundImages()) {
     promises.push(
