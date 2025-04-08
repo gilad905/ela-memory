@@ -58,10 +58,6 @@ async function startGame() {
   }
 }
 
-function waitFor(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 function getRandomCardNums(cardCount) {
   const boardImageCount = cardCount / 2;
   const imageNums = getRandomOrder(imageCount).splice(0, boardImageCount);
@@ -94,7 +90,7 @@ async function onCardClick(event) {
 
   if (flipped.length == 1) {
     const match = flipped[0].dataset.cardNum == card.dataset.cardNum;
-    if (window.isDev || match) {
+    if (window.alwaysMatch || match) {
       handleMatch([flipped[0], card]);
     } else {
       currentPlayer = currentPlayer == 0 ? 1 : 0;
@@ -118,17 +114,16 @@ function handleMatch(cards) {
   }
 }
 
-function flyCardToScore(card) {
+async function flyCardToScore(card) {
   const rect = card.getBoundingClientRect();
   const scorePos = scorePositions[currentPlayer];
   for (const prop of ["x", "y"]) {
     const diff = scorePos[prop] - rect[prop];
     card.style.setProperty(`--${prop}-pos`, `${diff}px`);
   }
-  card.addEventListener("transitionend", (_) => {
-    card.classList.remove("flipped");
-    card.classList.add("hidden");
-  });
+  await waitForEvent(card, "transitionend");
+  card.classList.remove("flipped");
+  card.classList.add("hidden");
 }
 
 function updateHud() {
@@ -156,7 +151,7 @@ function cloneTemplate(id) {
   return clone;
 }
 
-function handleWin() {
+async function handleWin() {
   let winner = score[0] > score[1] ? 0 : 1;
   winner = score[0] == score[1] ? -1 : winner;
   const winMessage = `- המנצח\n!${getPlayerDesc(winner)}`;
@@ -171,12 +166,12 @@ function handleWin() {
     }
   }
   document.querySelector("#hud").classList.add("large");
-  document.querySelector("#win").classList.remove("hidden");
   const board = document.querySelector("#board");
-  board.addEventListener("transitionend", (_) => {
-    board.remove();
-  });
   board.classList.add("hidden");
+  await waitForEvent(board, "transitionend");
+  board.remove();
+  await waitFor(1500);
+  document.querySelector("#win").style.display = "block";
 }
 
 function getPlayerDesc(playerNum) {
@@ -187,8 +182,16 @@ function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-window.isDev = false;
-// window.isDev = true;
+function waitFor(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function waitForEvent(element, eventName) {
+  return new Promise((resolve) => {
+    element.addEventListener(eventName, resolve, { once: true });
+  });
+}
+
 window.handleWinMock = function () {
   score[0] = randInt(0, 10);
   score[1] = randInt(0, 10);
@@ -196,6 +199,8 @@ window.handleWinMock = function () {
   handleWin();
 };
 
-if (window.isDev) {
-  setTimeout(window.handleWinMock, 5000);
-}
+// window.autoWin = false;
+// window.autoTin = true;
+// if (window.autoWin) {
+//   setTimeout(window.handleWinMock, 5000);
+// }

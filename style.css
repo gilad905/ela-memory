@@ -232,11 +232,23 @@ main {
   transition: width 0.3s ease;
 }
 
-#win {
+#win a {
+  display: block;
   font-size: 5rem;
-  transform: translateY(65rem);
   margin: auto;
   text-align: center;
+  transform: translateY(65rem);
+}
+
+#win img {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+
+#win #confetti {
+  width: 60rem;
 }
 
 @media screen and (max-width: 700px) {
