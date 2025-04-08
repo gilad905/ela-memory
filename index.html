@@ -10,7 +10,8 @@
   <link rel="icon" href="./assets/favicon.png" type="image/png">
 
   <!-- --player-1-color -->
-  <meta name="theme-color" content="#f5999e" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5999e">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#f5999e">
 </head>
 
 <body>
@@ -33,7 +34,11 @@
         ממישל וגלעד
       </div>
       <i class="space"></i>
-      <div class="button" role="button">שחקו</div>
+      <div id="buttons">
+        <div role="button" data-size="4">4x4</div>
+        <div role="button" data-size="5">5x4</div>
+        <div role="button" data-size="6">6x4</div>
+      </div>
     </div>
     <div id="hud" class="hidable hidden">
       <div id="prompt"></div>

@@ -1,21 +1,24 @@
-async function showLoader() {
+async function showLoader(preloaded) {
   const loader = document.querySelector("#loader div");
   const promises = [];
 
   promises.push(document.fonts.ready);
 
-  for (const image of document.images) {
-    if (!image.complete) {
+  const imgs = [...document.images, ...preloaded];
+  for (const img of imgs) {
+    // console.log("preload img", img.src);
+    if (!img.complete) {
       promises.push(
         new Promise((resolve) => {
-          image.addEventListener("load", resolve);
-          image.addEventListener("error", resolve);
+          img.addEventListener("load", resolve);
+          img.addEventListener("error", resolve);
         })
       );
     }
   }
 
   for (const url of getBackgroundImages()) {
+    // console.log("preload bg-img", url);
     promises.push(
       new Promise((resolve) => {
         const img = new Image();
@@ -45,7 +48,7 @@ async function showLoader() {
 
 function getBackgroundImages() {
   const bgUrls = new Set();
-  for (const side of document.querySelectorAll(".card-side")) {
+  for (const side of document.querySelectorAll("body, .card-side")) {
     const bg = getComputedStyle(side).backgroundImage;
     const match = bg && bg.match(/url\(["']?(.*?)["']?\)/);
     if (match) {

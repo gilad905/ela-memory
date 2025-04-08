@@ -1,7 +1,9 @@
 test ios
-test address bar color
+test theme-color
 smaller image files
-? size selection
+score alignment mobile
+
+? one unicorn on back
 ? anna + elsa in hud
 ? real "play again" button
 ? sound effects

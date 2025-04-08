@@ -1,8 +1,10 @@
-const imageCount = 21;
+const totalImageCount = 21;
+const maxImages = 12; // 6x4
+const maxImageNums = randomImageNums(maxImages);
 const score = [0, 0];
-const rows = 4;
-const cols = 4;
-const cardCount = rows * cols;
+let rows = 4;
+let cols = 4;
+let cardCount = rows * cols;
 const scorePositions = [];
 
 let currentPlayer = 0;
@@ -13,12 +15,27 @@ async function init() {
   for (const element of document.querySelectorAll(".hidden")) {
     element.style.display = "none";
   }
+  for (const button of document.querySelectorAll("#buttons div")) {
+    button.addEventListener("click", onSizeClick);
+  }
+
+  const preloaded = preloadImages();
   createHud();
-  createBoard();
-  await window.showLoader();
+  await window.showLoader(preloaded);
   hide(document.querySelector("#loader"));
-  document.querySelector("#intro .button").addEventListener("click", startGame);
   document.querySelector("#intro").classList.remove("scale-0");
+}
+
+function preloadImages() {
+  const imgs = [];
+  const cardUrls = maxImageNums.map(getImageUrl);
+  const urls = ["./assets/unicorn.png", ...cardUrls];
+  for (const url of urls) {
+    const img = new Image();
+    img.src = url;
+    imgs.push(img);
+  }
+  return imgs;
 }
 
 function createHud() {
@@ -31,23 +48,11 @@ function createHud() {
   updateHud();
 }
 
-function createBoard() {
-  const cardNums = getRandomCardNums(cardCount);
-  const board = document.querySelector("#board");
-
-  board.style.setProperty("--rows", rows);
-  board.style.setProperty("--cols", cols);
-
-  for (let i = 0; i < cardCount; i++) {
-    const cardNum = cardNums[i] + 1;
-    const card = cloneTemplate("card");
-
-    card.dataset.cardNum = cardNum;
-    const imageUrl = `./assets/cards/${cardNum}.jpeg`;
-    card.children[1].style.backgroundImage = `url(${imageUrl})`;
-    card.addEventListener("click", onCardClick);
-    board.appendChild(card);
-  }
+async function onSizeClick(event) {
+  cols = event.target.dataset.size;
+  cardCount = rows * cols;
+  createBoard();
+  startGame();
 }
 
 async function startGame() {
@@ -67,12 +72,41 @@ async function startGame() {
   }
 }
 
-function getRandomCardNums(cardCount) {
+function createBoard() {
+  const cardNums = randomCardNums();
+  // console.log(maxImageNums, cardNums);
+  const board = document.querySelector("#board");
+
+  board.style.setProperty("--rows", rows);
+  board.style.setProperty("--cols", cols);
+
+  for (const cardNum of cardNums) {
+    const card = cloneTemplate("card");
+
+    card.dataset.cardNum = cardNum;
+    const imageUrl = getImageUrl(cardNum);
+    card.children[1].style.backgroundImage = `url(${imageUrl})`;
+    card.addEventListener("click", onCardClick);
+    board.appendChild(card);
+  }
+}
+
+function getImageUrl(cardNum) {
+  return `./assets/cards/${cardNum}.jpeg`;
+}
+
+function randomCardNums() {
   const boardImageCount = cardCount / 2;
-  const imageNums = randOrder(imageCount).splice(0, boardImageCount);
+  const imageNums = maxImageNums.slice(0, boardImageCount);
   let cardNums = randOrder(cardCount);
   cardNums = cardNums.map((_) => imageNums[Math.floor(_ / 2)]);
   return cardNums;
+}
+
+function randomImageNums(count) {
+  return randOrder(totalImageCount)
+    .splice(0, count)
+    .map((num) => num + 1);
 }
 
 async function onCardClick(event) {
@@ -214,12 +248,20 @@ function randInt(min, max) {
 }
 
 window.elaMemory = {};
+
 elaMemory.alwaysMatch = false;
+
 elaMemory.mockWin = function () {
   score[0] = randInt(0, 10);
   score[1] = randInt(0, 10);
   updateHud();
   handleWin();
+};
+
+elaMemory.flipAll = function () {
+  for (const card of document.querySelectorAll("#board .card")) {
+    card.classList.add("flipped");
+  }
 };
 
 // setTimeout(elaMemory.mockWin, 5000);
