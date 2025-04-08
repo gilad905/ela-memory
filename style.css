@@ -12,10 +12,9 @@
   --main-width: 100rem;
   --main-height: calc(var(--main-width) * 4 / 3);
 
-  --hud-height: calc(var(--main-height) / 100 * 7);
+  --hud-height: calc(var(--main-height) / 100 * 10);
   --board-height: calc(var(--main-height) - var(--hud-height));
   --card-padding: 1rem;
-
 
   --player-1-color: #f5999e;
   --player-2-color: #c2c2c2;
@@ -38,6 +37,7 @@ body {
   font-family: Noot, Arial, Helvetica, sans-serif;
   overflow: hidden;
   height: 100vh;
+  font-size: 6rem;
 
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -74,11 +74,10 @@ main {
   align-items: center;
   justify-content: center;
   color: orange;
-  font-size: 6rem;
 }
 
 #intro div:nth-of-type(1) {
-  font-size: 9rem;
+  font-size: 1.5em;
   font-weight: bold;
 }
 
@@ -88,10 +87,10 @@ main {
 
 #intro .space {
   height: 5rem;
+  flex-shrink: 0;
 }
 
 #intro .button {
-  font-size: 5rem;
   outline: 0.2rem solid #0d402e;
   border-radius: 1rem;
   cursor: pointer;
@@ -107,7 +106,6 @@ main {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  font-size: 3.5rem;
 }
 
 #prompt,
@@ -169,15 +167,15 @@ main {
 }
 
 #hud.large #prompt {
-  transform: scale(1.8) translateY(8rem);
+  transform: scale(1.6) translateY(8rem);
 }
 
 #hud.large .score:first-child {
-  transform: scale(2.5) translate(10rem, 20rem);
+  transform: scale(2) translate(10rem, 20rem);
 }
 
 #hud.large .score:last-child {
-  transform: scale(2.5) translate(-10rem, 20rem);
+  transform: scale(2) translate(-10rem, 20rem);
 }
 
 #board {
@@ -286,7 +284,6 @@ main {
 
 #win a {
   display: block;
-  font-size: 5rem;
   margin: auto;
   text-align: center;
   transform: translateY(65rem);
@@ -304,12 +301,11 @@ main {
 }
 
 @media screen and (max-width: 700px) {
-  :root {
+  /* :root {
     --hud-height: calc(var(--main-height) / 100 * 14);
-  }
+  } */
 
-  #hud,
-  #intro {
+  body {
     font-size: 6rem;
   }
 }
