@@ -121,7 +121,7 @@ main {
 }
 
 #hud.large #prompt {
-  transform: scale(2) translateY(8rem);
+  transform: scale(1.8) translateY(8rem);
 }
 
 #hud.large .score:first-child {
