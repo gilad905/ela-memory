@@ -13,7 +13,9 @@ async function init() {
   createHud();
   createBoard();
   await window.showLoader();
-  await startGame();
+  document.querySelector("#loader").remove();
+  document.querySelector("#intro .button").addEventListener("click", startGame);
+  document.querySelector("#intro").classList.remove("hidden");
 }
 
 function createHud() {
@@ -50,8 +52,10 @@ function createBoard() {
 }
 
 async function startGame() {
-  document.querySelector("#loader").remove();
-  document.querySelector("main").classList.remove("hidden");
+  await hide(document.querySelector("#intro"));
+  for (const id of ["board", "hud"]) {
+    document.querySelector(`#${id}`).classList.remove("hidden");
+  }
   for (const card of document.querySelectorAll("#board .card")) {
     await waitFor(60);
     card.classList.remove("out-of-bounds");
@@ -114,7 +118,7 @@ async function flyCardToScore(card) {
   }
   await waitForEvent(card, "transitionend");
   card.classList.remove("flipped");
-  card.classList.add("hidden");
+  hide(card);
 }
 
 function updateHud() {
@@ -143,11 +147,9 @@ async function handleWin() {
   }
   document.querySelector("#hud").classList.add("large");
   const board = document.querySelector("#board");
-  board.classList.add("hidden");
-  await waitForEvent(board, "transitionend");
-  board.remove();
+  await hide(board);
   await waitFor(1500);
-  document.querySelector("#win").style.display = "block";
+  document.querySelector("#win").classList.remove("hidden");
 }
 
 function getPlayerDesc(playerNum) {
@@ -161,6 +163,13 @@ function prompt(message, playerNum) {
     promptElem.classList.add(`player-${playerNum + 1}`);
   }
   promptElem.innerText = message;
+}
+
+async function hide(elem) {
+  elem.classList.add("fading-out");
+  await waitForEvent(elem, "transitionend");
+  elem.classList.add("hidden");
+  elem.classList.remove("fading-out");
 }
 
 function cloneTemplate(id) {

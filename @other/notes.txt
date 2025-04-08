@@ -1,11 +1,8 @@
-test progress bar
-favicon - her face as cartoon / a card
-? anna + elsa in hud
-loading:
-  gift, her face as cartoon, happy bday shlomo
-  size selection
-win:
-  fireworks
-  ? real "play again" button
-? sound effects
+test ios
+test loader
+address bar color on mobile
 smaller image files
+? size selection
+? anna + elsa in hud
+? real "play again" button
+? sound effects

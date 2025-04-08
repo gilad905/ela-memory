@@ -52,6 +52,40 @@ main {
   height: var(--main-height);
 }
 
+#intro {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#intro div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: orange;
+  font-size: 6rem;
+}
+
+#intro .gift {
+  width: 20rem;
+}
+
+#intro #face,
+#intro div:nth-of-type(2) {
+  margin-bottom: 5rem;
+}
+
+#intro .button {
+  font-size: 5rem;
+  outline: 0.2rem solid #0d402e;
+  border-radius: 1rem;
+  cursor: pointer;
+  padding: 2rem;
+  padding-bottom: 1rem;
+}
+
 #hud {
   height: var(--hud-height);
   padding: var(--card-padding);
@@ -63,7 +97,8 @@ main {
   font-size: 3.5rem;
 }
 
-#prompt {
+#prompt,
+#intro {
   text-align: center;
   -webkit-text-stroke: .15rem black;
 }
@@ -140,7 +175,6 @@ main {
   --total-row-padding: calc(var(--card-padding) * (var(--rows)) * 2);
   /* disable spacing because of line breaks */
   font-size: 0;
-  transition: opacity 0.5s;
 }
 
 .card {
@@ -172,7 +206,17 @@ main {
   cursor: pointer;
 }
 
+.hidable,
+.fading-out {
+  transition: opacity 0.5s ease;
+}
+
 .hidden {
+  opacity: 0;
+  display: none !important;
+}
+
+.fading-out {
   opacity: 0;
 }
 
@@ -182,9 +226,7 @@ main {
   background-repeat: no-repeat;
   outline: 0.2rem solid #0d402e;
   border-radius: 1rem;
-  transition-property: opacity, transform;
-  transition-duration: 0.5s;
-  transition-timing-function: ease;
+  transition: transform 0.5s ease;
 }
 
 .card-back {
@@ -222,6 +264,9 @@ main {
   max-width: 500px;
   background: white;
   border-radius: 1vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   overflow: hidden;
 }
 
@@ -256,7 +301,8 @@ main {
     --hud-height: calc(var(--main-height) / 100 * 14);
   }
 
-  #hud {
+  #hud,
+  #intro {
     font-size: 6rem;
   }
 }

@@ -4,24 +4,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>זכרון בשלמון</title>
+  <title>🎁 זכרון בשלמון 🎁</title>
 
   <link rel="stylesheet" href="./style.css">
+  <link rel="icon" href="./assets/favicon.png" type="image/png">
 </head>
 
 <body>
-  <div id="loader">
-    <div></div>
-  </div>
+  <main>
+    <div id="loader">
+      <div></div>
+    </div>
 
-  <main class="hidden">
-    <div id="hud">
+    <div id="intro" class="hidable hidden">
+      <div>
+        <img src="./assets/gift.png" alt="Gift" class="gift" />
+        זכרון בשלמון
+        <img src="./assets/gift.png" alt="Gift" class="gift" />
+      </div>
+      <img src="./assets/face.png" alt="Face" id="face" />
+      <div>
+        !מזל טוב לשלמה
+        <br>
+        ממישל וגלעד
+      </div>
+      <div class="button" role="button">שחקו</div>
+    </div>
+    <div id="hud" class="hidable hidden">
       <div id="prompt"></div>
     </div>
-    <div id="board"></div>
-    <div id="win" style="display: none;">
-      <img src="./assets/anna.gif" alt="Anna" id="anna"/>
-      <img src="./assets/confetti.gif" alt="Confetti" id="confetti"/>
+    <div id="board" class="hidable hidden"></div>
+    <div id="win" class="hidable hidden">
+      <img src="./assets/anna.gif" alt="Anna" id="anna" />
+      <img src="./assets/confetti.gif" alt="Confetti" id="confetti" />
       <a href="">שחקו שוב</a>
     </div>
   </main>
