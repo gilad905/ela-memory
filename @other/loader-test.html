@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full Asset Loader</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    #progress-container {
+      width: 100%;
+      background: #eee;
+      height: 30px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #4caf50;
+      transition: width 0.3s ease;
+    }
+
+    .bg-test {
+      width: 200px;
+      height: 200px;
+      background-image: url('https://via.placeholder.com/200?text=BG');
+      background-size: cover;
+      margin: 10px;
+    }
+
+    img {
+      width: 200px;
+      height: auto;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-container">
+  <div id="progress-bar"></div>
+</div>
+
+<h1>Font + BG + Images</h1>
+
+<div class="bg-test"></div>
+
+<img src="https://via.placeholder.com/200?text=1" />
+<img src="https://via.placeholder.com/200?text=2" />
+
+<script>
+  const images = Array.from(document.images);
+  const progressBar = document.getElementById('progress-bar');
+
+  let promises = [];
+
+  // 1. Track image tags
+  images.forEach(img => {
+    if (img.complete) return;
+    promises.push(new Promise(resolve => {
+      img.addEventListener('load', resolve);
+      img.addEventListener('error', resolve);
+    }));
+  });
+
+  // 2. Track fonts
+  promises.push(document.fonts.ready);
+
+  // 3. Track background-images
+  function getBackgroundImages() {
+    const bgUrls = new Set();
+    const elements = Array.from(document.querySelectorAll('*'));
+    elements.forEach(el => {
+      const bg = getComputedStyle(el).backgroundImage;
+      const match = bg && bg.match(/url\(["']?(.*?)["']?\)/);
+      if (match) {
+        bgUrls.add(match[1]);
+      }
+    });
+    return Array.from(bgUrls);
+  }
+
+  getBackgroundImages().forEach(url => {
+    promises.push(new Promise(resolve => {
+      const img = new Image();
+      img.onload = img.onerror = resolve;
+      img.src = url;
+    }));
+  });
+
+  // Progress tracking
+  let loaded = 0;
+  const total = promises.length;
+
+  function updateProgress() {
+    loaded++;
+    const percent = (loaded / total) * 100;
+    progressBar.style.width = percent + '%';
+  }
+
+  promises.forEach(p => {
+    p.then(updateProgress);
+  });
+
+</script>
+</body>
+</html>

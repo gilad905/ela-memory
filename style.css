@@ -16,8 +16,7 @@
   --board-height: calc(var(--main-height) - var(--hud-height));
   --card-padding: 1rem;
 
-  
-  /* --player-1-color: #79c6f6; */
+
   --player-1-color: #f5999e;
   --player-2-color: #c2c2c2;
 }
@@ -34,7 +33,7 @@ body {
   align-items: center;
   justify-content: center;
 
-  background-image: url(./@raw-assets/watercolor-texture-background-free-vector.jpg);
+  background-image: url("./assets/bg.webp");
   background-size: cover;
   font-family: Noot, Arial, Helvetica, sans-serif;
   overflow: hidden;
@@ -61,28 +60,11 @@ main {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  font-size: 3rem;
-}
-
-#hud.large #prompt,
-#hud.large .score {
-  transition: transform 2s ease;
-}
-
-#hud.large #prompt {
-  transform: scale(2.5) translateY(8rem);
-}
-
-#hud.large .score:first-child {
-  transform: scale(2.5) translate(10rem, 20rem);
-}
-
-#hud.large .score:last-child {
-  transform: scale(2.5) translate(-10rem, 20rem);
+  font-size: 3.5rem;
 }
 
 #prompt {
-  /* text-shadow: .1rem -.1rem 0 black, -.1rem .1rem 0 black, .1rem .1rem 0 black; */
+  text-align: center;
   -webkit-text-stroke: .15rem black;
 }
 
@@ -95,8 +77,8 @@ main {
 }
 
 .score {
-  height: 5rem;
-  width: 5rem;
+  height: 1.4em;
+  width: 1.4em;
   position: relative;
   transform: translate(0, 0);
 }
@@ -115,9 +97,9 @@ main {
   transition: filter 0.5s ease;
 }
 
-#hud .card-side span {
-  font-size: 3.2rem;
-  margin-top: 0.8rem;
+.score .card-side span {
+  font-size: 1.2em;
+  margin-top: 0.25em;
 }
 
 .score:first-child .card-side {
@@ -133,10 +115,26 @@ main {
   animation: pulse .5s infinite alternate ease-in-out;
 }
 
+#hud.large #prompt,
+#hud.large .score {
+  transition: transform 2s ease;
+}
+
+#hud.large #prompt {
+  transform: scale(2) translateY(8rem);
+}
+
+#hud.large .score:first-child {
+  transform: scale(2.5) translate(10rem, 20rem);
+}
+
+#hud.large .score:last-child {
+  transform: scale(2.5) translate(-10rem, 20rem);
+}
+
 #board {
   height: var(--board-height);
   width: 100%;
-  /* padding: var(--card-padding); */
   box-sizing: border-box;
   --total-col-padding: calc(var(--card-padding) * (var(--cols)) * 2);
   --total-row-padding: calc(var(--card-padding) * (var(--rows)) * 2);
@@ -182,7 +180,7 @@ main {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  outline: 0.3rem solid #0d402e;
+  outline: 0.2rem solid #0d402e;
   border-radius: 1rem;
   transition-property: opacity, transform;
   transition-duration: 0.5s;
@@ -190,7 +188,7 @@ main {
 }
 
 .card-back {
-  background-image: url("./@raw-assets/card/unicorn/unicorn-5.png");
+  background-image: url("./assets/unicorn.png");
 }
 
 .card .card-side {
@@ -215,6 +213,40 @@ main {
 .card .card-front,
 .card.flipped .card-back {
   transform: rotateY(-180deg);
+}
+
+#loader {
+  position: absolute;
+  width: 80vw;
+  height: 3vh;
+  max-width: 500px;
+  background: white;
+  border-radius: 1vw;
+  overflow: hidden;
+}
+
+#loader div {
+  height: 100%;
+  width: 0%;
+  background: #4caf50;
+  transition: width 0.3s ease;
+}
+
+#win {
+  font-size: 5rem;
+  transform: translateY(65rem);
+  margin: auto;
+  text-align: center;
+}
+
+@media screen and (max-width: 700px) {
+  :root {
+    --hud-height: calc(var(--main-height) / 100 * 14);
+  }
+
+  #hud {
+    font-size: 6rem;
+  }
 }
 
 @keyframes pulse {

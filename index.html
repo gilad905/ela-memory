@@ -10,11 +10,18 @@
 </head>
 
 <body>
-  <main>
+  <div id="loader">
+    <div></div>
+  </div>
+
+  <main class="hidden">
     <div id="hud">
       <div id="prompt"></div>
     </div>
     <div id="board"></div>
+    <div id="win" class="hidden">
+      <a href="">שחקו שוב</a>
+    </div>
   </main>
 
   <template id="score-template">
@@ -32,6 +39,7 @@
     </div>
   </template>
 
+  <script src="./loader.mjs"></script>
   <script src="./main.mjs"></script>
 </body>
 

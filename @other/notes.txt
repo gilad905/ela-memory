@@ -1,0 +1,11 @@
+test progress bar
+favicon - her face as cartoon / a card
+? anna + elsa in hud
+loading:
+  gift, her face as cartoon, happy bday shlomo
+  size selection
+win:
+  fireworks
+  ? real "play again" button
+? sound effects
+smaller image files

@@ -7,8 +7,14 @@ const scorePositions = [];
 
 let currentPlayer = 0;
 
-createHud();
-createBoard();
+init();
+
+async function init() {
+  createHud();
+  createBoard();
+  await window.showLoader();
+  await startGame();
+}
 
 function createHud() {
   const hud = document.querySelector("#hud");
@@ -24,7 +30,7 @@ function createHud() {
   updateHud();
 }
 
-async function createBoard() {
+function createBoard() {
   const cardNums = getRandomCardNums(cardCount);
   const board = document.querySelector("#board");
 
@@ -41,8 +47,12 @@ async function createBoard() {
     card.addEventListener("click", onCardClick);
     board.appendChild(card);
   }
+}
 
-  for (const card of board.children) {
+async function startGame() {
+  document.querySelector("#loader").remove();
+  document.querySelector("main").classList.remove("hidden");
+  for (const card of document.querySelectorAll("#board .card")) {
     await waitFor(60);
     card.classList.remove("out-of-bounds");
   }
@@ -149,7 +159,8 @@ function cloneTemplate(id) {
 function handleWin() {
   let winner = score[0] > score[1] ? 0 : 1;
   winner = score[0] == score[1] ? -1 : winner;
-  const winMessage = `!המנצח - ${getPlayerDesc(winner)}`;
+  const winMessage = `- המנצח\n!${getPlayerDesc(winner)}`;
+  // const winMessage = `!המנצח - ${getPlayerDesc(winner)}`;
   const message = score[0] == score[1] ? "!תיקו" : winMessage;
   prompt(message, winner);
   for (let i = 0; i < 2; i++) {
@@ -160,7 +171,12 @@ function handleWin() {
     }
   }
   document.querySelector("#hud").classList.add("large");
-  document.querySelector("#board").classList.add("hidden");
+  document.querySelector("#win").classList.remove("hidden");
+  const board = document.querySelector("#board");
+  board.addEventListener("transitionend", (_) => {
+    board.remove();
+  });
+  board.classList.add("hidden");
 }
 
 function getPlayerDesc(playerNum) {
