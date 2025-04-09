@@ -1,10 +1,9 @@
 score alignment mobile
-move up "win a"
 theme-color
-test scrollable
+test pull to reload + scroll to fullscreen
+move up "win a"
 hide debugs
 
-? navigation back
 ? reduce gap on big boards (or everywhere)
 ? one unicorn on back
 ? anna + elsa in hud

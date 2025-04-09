@@ -33,7 +33,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
   background-image: url("./assets/bg.webp");
   background-size: cover;
   background-position: 60%;
@@ -309,17 +309,19 @@ main {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  font-size: 2rem;
-  line-height: 2rem;
+  font-size: 4rem;
+  line-height: 4rem;
 }
 
 #debugs div {
-  display: inline;
+  display: inline-block;
   outline: .1rem solid black;
   border-radius: .5rem;
   padding: .2rem;
   background-color: white;
   cursor: pointer;
+  width: 3rem;
+  text-align: center;
 }
 
 @media screen and (max-width: 700px) {

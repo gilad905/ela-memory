@@ -56,6 +56,9 @@ async function onSizeClick(event) {
 }
 
 async function startGame() {
+  window.addEventListener("popstate", () => location.reload());
+  history.pushState("game", "");
+
   await hide(document.querySelector("#intro"));
   for (const id of ["board", "hud"]) {
     show(document.querySelector(`#${id}`));
