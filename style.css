@@ -29,15 +29,16 @@
 body {
   margin: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100vh;
+  overflow: hidden;
   background-image: url("./assets/bg.webp");
   background-size: cover;
   background-position: 60%;
   background-repeat: no-repeat;
   font-family: Noot, Arial, Helvetica, sans-serif;
-  overflow: hidden;
-  height: 100vh;
   font-size: 6rem;
 
   /* -webkit-user-select: none;
@@ -49,6 +50,26 @@ body {
 main {
   width: var(--main-width);
   height: var(--main-height);
+}
+
+#loader {
+  position: absolute;
+  width: 80vw;
+  height: 3vh;
+  max-width: 500px;
+  background: white;
+  border-radius: 1vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+
+#loader div {
+  height: 100%;
+  width: 0%;
+  background: #4caf50;
+  transition: width 0.3s ease;
 }
 
 #intro {
@@ -75,7 +96,7 @@ main {
   color: orange;
 }
 
-#intro > div:nth-of-type(1) {
+#intro>div:nth-of-type(1) {
   font-size: 1.5em;
   font-weight: bold;
 }
@@ -266,31 +287,11 @@ main {
   transform: rotateY(-180deg);
 }
 
-#loader {
-  position: absolute;
-  width: 80vw;
-  height: 3vh;
-  max-width: 500px;
-  background: white;
-  border-radius: 1vw;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  overflow: hidden;
-}
-
-#loader div {
-  height: 100%;
-  width: 0%;
-  background: #4caf50;
-  transition: width 0.3s ease;
-}
-
 #win a {
   display: block;
   margin: auto;
   text-align: center;
-  transform: translateY(65rem);
+  transform: translateY(50rem);
 }
 
 #win img {
@@ -302,6 +303,23 @@ main {
 
 #win #confetti {
   width: 60rem;
+}
+
+#debugs {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  line-height: 2rem;
+}
+
+#debugs div {
+  display: inline;
+  outline: .1rem solid black;
+  border-radius: .5rem;
+  padding: .2rem;
+  background-color: white;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 700px) {

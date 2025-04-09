@@ -1,8 +1,8 @@
-theme-color
-copyright
 score alignment mobile
 move up "win a"
+theme-color
 test scrollable
+hide debugs
 
 ? navigation back
 ? reduce gap on big boards (or everywhere)

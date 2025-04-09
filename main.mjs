@@ -264,4 +264,12 @@ elaMemory.flipAll = function () {
   }
 };
 
-// setTimeout(elaMemory.mockWin, 5000);
+document
+  .querySelector("#mock-win")
+  .addEventListener("click", elaMemory.mockWin);
+document
+  .querySelector("#flip-all")
+  .addEventListener("click", elaMemory.flipAll);
+document
+  .querySelector("#always-match")
+  .addEventListener("click", (_) => (elaMemory.alwaysMatch = true));
