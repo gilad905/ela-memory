@@ -31,20 +31,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-
   background-image: url("./assets/bg.webp");
   background-size: cover;
+  background-position: 60%;
+  background-repeat: no-repeat;
   font-family: Noot, Arial, Helvetica, sans-serif;
   overflow: hidden;
   height: 100vh;
   font-size: 6rem;
 
-  -webkit-user-select: none;
+  /* -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
-  background-position: 60%;
-  background-repeat: no-repeat;
+  user-select: none; */
 }
 
 main {

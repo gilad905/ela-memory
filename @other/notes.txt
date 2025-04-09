@@ -1,9 +1,11 @@
-test ios
-test theme-color
-smaller image files
+theme-color
+copyright
 score alignment mobile
+move up "win a"
+test scrollable
 
+? navigation back
+? reduce gap on big boards (or everywhere)
 ? one unicorn on back
 ? anna + elsa in hud
-? real "play again" button
 ? sound effects
