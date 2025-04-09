@@ -1,7 +1,5 @@
 score alignment mobile
 theme-color
-test pull to reload + scroll to fullscreen
-move up "win a"
 hide debugs
 
 ? reduce gap on big boards (or everywhere)
