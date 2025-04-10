@@ -1,4 +1,4 @@
-const totalImageCount = 21;
+const totalImageCount = 44;
 const maxImages = 12; // 6x4
 const maxImageNums = randomImageNums(maxImages);
 const score = [0, 0];
@@ -166,9 +166,14 @@ async function flyCardToScore(card) {
 function updateHud() {
   for (let i = 0; i < score.length; i++) {
     const scoreElem = document.querySelectorAll("#hud .score")[i];
-    const classFunc = i == currentPlayer ? "add" : "remove";
-    scoreElem.classList[classFunc]("current");
-    scoreElem.querySelector("span").innerText = score[i];
+    if (i == currentPlayer) {
+      scoreElem.classList.add("current");
+      scoreElem.classList.remove("disabled");
+    } else {
+      scoreElem.classList.add("disabled");
+      scoreElem.classList.remove("current");
+    }
+    scoreElem.innerText = score[i];
   }
   prompt(`${getPlayerDesc(currentPlayer)} - תורך`, currentPlayer);
 }
@@ -177,18 +182,20 @@ async function handleWin() {
   let winner = score[0] > score[1] ? 0 : 1;
   winner = score[0] == score[1] ? -1 : winner;
   const winMessage = `- המנצח\n!${getPlayerDesc(winner)}`;
-  // const winMessage = `!המנצח - ${getPlayerDesc(winner)}`;
   const message = score[0] == score[1] ? "!תיקו" : winMessage;
   prompt(message, winner);
+
   for (let i = 0; i < 2; i++) {
     const score = document.querySelectorAll("#hud .score")[i];
-    score.classList.remove("current");
+    score.classList.remove("current", "disabled");
     if (winner != -1 && i != winner) {
-      score.classList.add("lost");
+      score.classList.add("disabled");
     }
   }
+  // render the score class updates
+  await waitForFrame();
+  hide(document.querySelector("#board"));
   document.querySelector("#hud").classList.add("large");
-  await hide(document.querySelector("#board"));
   await waitFor(1500);
   show(document.querySelector("#win"));
 }
@@ -237,6 +244,14 @@ function waitForEvent(element, eventName) {
   });
 }
 
+function waitForFrame() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => resolve());
+    });
+  });
+}
+
 function randOrder(count) {
   const order = Array.from({ length: count }, (_, i) => i);
   for (let i = order.length - 1; i > 0; i--) {
@@ -267,6 +282,14 @@ elaMemory.flipAll = function () {
   }
 };
 
+elaMemory.leaveTwo = function () {
+  const cards = document.querySelectorAll("#board .card");
+  for (let i = 0; i < cardCount - 2; i += 2) {
+    handleMatch([cards[i], cards[i + 1]]);
+  }
+  elaMemory.alwaysMatch = true;
+};
+
 document
   .querySelector("#mock-win")
   .addEventListener("click", elaMemory.mockWin);
@@ -275,4 +298,7 @@ document
   .addEventListener("click", elaMemory.flipAll);
 document
   .querySelector("#always-match")
-  .addEventListener("click", (_) => (elaMemory.alwaysMatch = true));
+  .addEventListener(
+    "click",
+    (_) => (elaMemory.alwaysMatch = !elaMemory.alwaysMatch)
+  );

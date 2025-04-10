@@ -35,9 +35,9 @@
       </div>
       <i class="space"></i>
       <div id="buttons">
-        <div role="button" data-size="4">4x4</div>
-        <div role="button" data-size="5">5x4</div>
-        <div role="button" data-size="6">6x4</div>
+        <div role="button" class="box" data-size="4">4x4</div>
+        <div role="button" class="box" data-size="5">5x4</div>
+        <div role="button" class="box" data-size="6">6x4</div>
       </div>
     </div>
     <div id="hud" class="hidable hidden">
@@ -51,24 +51,20 @@
     </div>
   </main>
 
-  <div id="debugs">
-    <div role="button" id="mock-win">w</div>
-    <div role="button" id="flip-all">a</div>
-    <div role="button" id="always-match">m</div>
+  <div id="debugs" class="hidable hidden">
+    <div role="button" id="mock-win" class="box">w</div>
+    <div role="button" id="flip-all" class="box">a</div>
+    <div role="button" id="always-match" class="box">m</div>
   </div>
 
   <template id="score-template">
-    <div class="score">
-      <div class="card-side">
-        <span></span>
-      </div>
-    </div>
+    <div class="score box"></div>
   </template>
 
   <template id="card-template">
     <div class="card out-of-bounds">
-      <div class="card-side card-back"></div>
-      <div class="card-side card-front"></div>
+      <div class="box card-side card-back"></div>
+      <div class="box card-side card-front"></div>
     </div>
   </template>
 

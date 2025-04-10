@@ -1,6 +1,6 @@
-score alignment mobile
-theme-color
-hide debugs
+? score alignment mobile
+? zoom in on images
+? bg audio
 
 ? reduce gap on big boards (or everywhere)
 ? one unicorn on back

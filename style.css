@@ -41,10 +41,16 @@ body {
   font-family: Noot, Arial, Helvetica, sans-serif;
   font-size: 6rem;
 
-  /* -webkit-user-select: none;
+  -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none; */
+  user-select: none;
+}
+
+@media screen and (max-width: 700px) {
+  body {
+    font-size: 6rem;
+  }
 }
 
 main {
@@ -73,12 +79,14 @@ main {
 }
 
 #intro {
-  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transform: scale(1);
+  transform: translate(-50%, -50%) scale(1);
   --bounce: cubic-bezier(0.68, 0.01, 0.52, 1.52);
   transition-property: transform, opacity;
   transition-duration: 1s, 0.5s;
@@ -86,7 +94,7 @@ main {
 }
 
 #intro.scale-0 {
-  transform: scale(0);
+  transform: translate(-50%, -50%) scale(0);
 }
 
 #intro div {
@@ -105,18 +113,25 @@ main {
   width: 20rem;
 }
 
+#intro #face {
+  height: 50rem;
+}
+
 #intro .space {
   height: 5rem;
   flex-shrink: 0;
 }
 
 #intro #buttons div {
-  outline: 0.2rem solid #0d402e;
-  border-radius: 1rem;
   cursor: pointer;
+  margin: 0 1rem;
   padding: 2rem;
   padding-bottom: 1rem;
-  margin: 0 1rem;
+}
+
+.box {
+  outline: 0.2rem solid #0d402e;
+  border-radius: 1rem;
 }
 
 #hud {
@@ -144,42 +159,28 @@ main {
 }
 
 .score {
-  height: 1.4em;
-  width: 1.4em;
-  position: relative;
-  transform: translate(0, 0);
-}
-
-.score.lost {
-  filter: grayscale(1) contrast(0.4);
-}
-
-.score .card-side {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 2rem;
+  padding-bottom: 1rem;
   background-color: white;
-  transition: filter 0.5s ease;
+  transform: scale(1) translate(0, 0);
+  filter: grayscale(0) contrast(1);
+  transition: filter 0.5s ease, transform 0.5s ease;
 }
 
-.score .card-side span {
-  font-size: 1.2em;
-  margin-top: 0.25em;
-}
-
-.score:first-child .card-side {
+.score:first-child {
   color: var(--player-1-color);
 }
 
-.score:last-child .card-side {
+.score:last-child {
   color: var(--player-2-color);
 }
 
-.score.current .card-side {
-  filter: grayscale(0) contrast(1);
+#hud .score.current {
   animation: pulse .5s infinite alternate ease-in-out;
+}
+
+.score.disabled {
+  filter: grayscale(1) contrast(0.4);
 }
 
 #hud.large #prompt,
@@ -250,8 +251,6 @@ main {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  outline: 0.2rem solid #0d402e;
-  border-radius: 1rem;
   transition: transform 0.5s ease;
 }
 
@@ -322,16 +321,6 @@ main {
   cursor: pointer;
   width: 3rem;
   text-align: center;
-}
-
-@media screen and (max-width: 700px) {
-  /* :root {
-    --hud-height: calc(var(--main-height) / 100 * 14);
-  } */
-
-  body {
-    font-size: 6rem;
-  }
 }
 
 @keyframes pulse {
