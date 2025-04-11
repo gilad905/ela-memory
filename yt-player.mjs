@@ -1,7 +1,7 @@
 const playlist = [
-  "zm4VcCdZ84U", // snowman
+  "TeQ_TTyLGMs", // snowman
   "L0MK7qz13bU", // let it go
-  // "TeQ_TTyLGMs", // snowman 2
+  // "zm4VcCdZ84U", // snowman bad
   // "C4knNWvN_sk", // test
   // "zJP9Nnvng3Q", // test
 ];
