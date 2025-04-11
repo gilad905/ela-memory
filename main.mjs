@@ -292,13 +292,13 @@ elaMemory.leaveTwo = function () {
 
 document
   .querySelector("#mock-win")
-  .addEventListener("click", elaMemory.mockWin);
+  ?.addEventListener("click", elaMemory.mockWin);
 document
   .querySelector("#flip-all")
-  .addEventListener("click", elaMemory.flipAll);
+  ?.addEventListener("click", elaMemory.flipAll);
 document
   .querySelector("#always-match")
-  .addEventListener(
+  ?.addEventListener(
     "click",
     (_) => (elaMemory.alwaysMatch = !elaMemory.alwaysMatch)
   );
