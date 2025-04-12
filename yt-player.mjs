@@ -1,7 +1,6 @@
 const playlist = [
   "TeQ_TTyLGMs", // snowman
   "L0MK7qz13bU", // let it go
-  // "zm4VcCdZ84U", // snowman bad
   // "C4knNWvN_sk", // test
   // "zJP9Nnvng3Q", // test
 ];
@@ -16,8 +15,14 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onReady(event) {
-  const { body } = document;
-  body.addEventListener("click", () => player.playVideo(), { once: true });
+  document.addEventListener(
+    "click",
+    () => {
+      // console.log("click");
+      player.playVideo();
+    },
+    { once: true }
+  );
 }
 
 function onStateChange(event) {
